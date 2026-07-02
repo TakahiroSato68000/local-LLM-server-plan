@@ -1,0 +1,34 @@
+[Unit]
+Description=Ollama Local LLM Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ollama
+Group=ollama
+
+# APIサーバのバインドアドレスとポート
+# ローカルのみ: 127.0.0.1:11434
+# LAN公開:     0.0.0.0:11434
+Environment="OLLAMA_HOST=127.0.0.1:11434"
+
+# モデルの保存先（デフォルト: ~/.ollama/models）
+# Environment="OLLAMA_MODELS=/var/lib/ollama/models"
+
+# GPU使用時のVRAM上限（例: 8GiB）
+# Environment="OLLAMA_GPU_MEMORY=8GiB"
+
+ExecStart=/usr/local/bin/ollama serve
+Restart=always
+RestartSec=5
+
+# セキュリティ設定
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/ollama
+
+[Install]
+WantedBy=multi-user.target
