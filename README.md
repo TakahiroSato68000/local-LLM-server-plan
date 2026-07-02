@@ -51,7 +51,8 @@ Linux上で動作します。
 | 項目 | 内容 |
 |------|------|
 | OS種別 | **Linux**（確定） |
-| ディストリビューション | **未定** |
+| ディストリビューション | **Ubuntu 24.04 LTS**（確定） |
+| カーネル | **OEM カーネル**（`linux-oem-24.04`）|
 
 ---
 
@@ -62,7 +63,7 @@ Linux上で動作します。
 | GPU/APU | iGPU または NVIDIA 8GB VRAM | AMD/NVIDIA 16GB VRAM以上 |
 | RAM | 16 GB | 32 GB以上 |
 | ストレージ | 50 GB (SSD) | 200 GB以上 (SSD) |
-| OS | Linux（Ubuntu 20.04+等） | Ubuntu 22.04 LTS / Fedora 40+ |
+| OS | Linux（Ubuntu 20.04+等） | **Ubuntu 24.04 LTS + OEM カーネル（`linux-oem-24.04`）** |
 
 > MINISFORUM AI X1 Pro 370 はAMD Radeon 890M（iGPU）を搭載。  
 > ROCm対応により、CPU/APUを活用したLLM推論が可能です（llama.cpp / Ollama対応）。  
@@ -83,6 +84,13 @@ chmod +x setup.sh
 手動で行う場合：
 
 ```bash
+# 0. OEM カーネルのインストール（新世代AMD APU向け最新カーネル）
+sudo apt install linux-oem-24.04
+sudo reboot
+
+# カーネルバージョン確認
+uname -r
+
 # 1. Ollamaをインストール
 curl -fsSL https://ollama.com/install.sh | sh
 
