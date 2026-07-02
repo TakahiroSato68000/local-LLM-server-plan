@@ -3,25 +3,52 @@
 ## 概要
 
 Ollamaを使って最小構成のローカルLLMサーバを構築する手順です。  
-GPU搭載のUbuntuまたはWindowsマシン上で動作します。
+Linux上で動作します。
 
 ---
 
-## 必要な環境
+## 採用ハードウェア・OS
+
+### ミニPC本体
+
+| 項目 | 内容 |
+|------|------|
+| 機種 | MINISFORUM AI X1 Pro 370 ベアボーンキット |
+| フォームファクタ | ミニPC（ベアボーン） |
+| APU | AMD Ryzen AI 9 HX 370（Zen 5、12コア/24スレッド） |
+| 内蔵GPU | AMD Radeon 890M（RDNA 3.5、iGPU） |
+| NPU | AMD XDNA 2（最大50 TOPS） |
+| メモリスロット | DDR5 SO-DIMM × 2（最大96 GB対応） |
+| ストレージスロット | M.2 NVMe PCIe 4.0 × 2 |
+
+> **備考：ベアボーンキットのため、メモリ・ストレージは別途用意が必要です。**
+
+### OS
+
+| 項目 | 内容 |
+|------|------|
+| OS種別 | **Linux**（確定） |
+| ディストリビューション | **未定** |
+
+---
+
+## 必要な環境（参考スペック）
 
 | 項目 | 最小 | 推奨 |
 |------|------|------|
-| GPU | NVIDIA 8GB VRAM | NVIDIA 16GB VRAM以上 |
+| GPU/APU | iGPU または NVIDIA 8GB VRAM | AMD/NVIDIA 16GB VRAM以上 |
 | RAM | 16 GB | 32 GB以上 |
 | ストレージ | 50 GB (SSD) | 200 GB以上 (SSD) |
-| OS | Ubuntu 20.04+ / Windows 10+ | Ubuntu 22.04 / Windows 11 |
-| CUDA | 11.8+ | 12.x |
+| OS | Linux（Ubuntu 20.04+等） | Ubuntu 22.04 LTS / Fedora 40+ |
+
+> MINISFORUM AI X1 Pro 370 はAMD Radeon 890M（iGPU）を搭載。  
+> ROCm対応により、CPU/APUを活用したLLM推論が可能です（llama.cpp / Ollama対応）。
 
 ---
 
 ## セットアップ手順
 
-### Ubuntu / Linux
+### Linux
 
 ```bash
 # スクリプトに実行権限を付与して実行
@@ -41,20 +68,6 @@ ollama pull llama3
 # 3. APIサーバを起動（デフォルトポート: 11434）
 ollama serve
 ```
-
-### Windows
-
-PowerShellを管理者権限で実行：
-
-```powershell
-.\setup_windows.ps1
-```
-
-または手動で：
-
-1. https://ollama.com/download から `OllamaSetup.exe` をダウンロード・インストール
-2. PowerShellで `ollama pull llama3` を実行
-3. `ollama serve` でサーバ起動
 
 ---
 
