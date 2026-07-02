@@ -31,7 +31,7 @@ Linux上で動作します。
 | 規格 | DDR5 SO-DIMM |
 | 動作クロック | 5600 MHz |
 | レイテンシ | CL46 |
-| 状態 | **発注済み** |
+| 状態 | **導入済み** |
 
 ### ストレージ
 
@@ -42,7 +42,7 @@ Linux上で動作します。
 | 容量 | 2 TB |
 | フォームファクタ | M.2 2280 |
 | インターフェース | PCIe Gen4 NVMe |
-| 状態 | **発注済み** |
+| 状態 | **導入済み** |
 
 > **備考：ベアボーンキットのため、ストレージは別途用意が必要です。**
 
@@ -65,7 +65,8 @@ Linux上で動作します。
 | OS | Linux（Ubuntu 20.04+等） | Ubuntu 22.04 LTS / Fedora 40+ |
 
 > MINISFORUM AI X1 Pro 370 はAMD Radeon 890M（iGPU）を搭載。  
-> ROCm対応により、CPU/APUを活用したLLM推論が可能です（llama.cpp / Ollama対応）。
+> ROCm対応により、CPU/APUを活用したLLM推論が可能です（llama.cpp / Ollama対応）。  
+> **本環境は64 GB DDR5を搭載しているため、70B級のモデルも4bit量子化で動作可能です。**
 
 ---
 
@@ -153,12 +154,22 @@ ollama serve           # APIサーバ起動
 
 ## 利用可能なモデル例
 
-| モデル | サイズ | VRAM目安 |
-|--------|--------|----------|
-| llama3 | 8B | 8 GB |
-| llama3:70b | 70B | 40 GB |
-| mistral | 7B | 8 GB |
-| gemma2 | 9B | 10 GB |
-| qwen2 | 7B | 8 GB |
+> **64 GB RAM搭載のため、70B級モデルも4bit量子化（Q4）で動作可能です。**  
+> RAM使用量の目安はQ4量子化時の値です。
+
+| モデル | パラメータ数 | RAM目安（Q4） | 備考 |
+|--------|------------|---------------|------|
+| llama3.2:3b | 3B | ~2 GB | 軽量・高速 |
+| llama3.1:8b | 8B | ~5 GB | バランス型・推奨 |
+| mistral:7b | 7B | ~5 GB | 高品質・汎用 |
+| gemma2:9b | 9B | ~6 GB | Google製・高性能 |
+| qwen2.5:7b | 7B | ~5 GB | 多言語対応（日本語強化） |
+| phi4:14b | 14B | ~9 GB | Microsoft製・高効率 |
+| deepseek-r1:14b | 14B | ~9 GB | 推論特化 |
+| codestral:22b | 22B | ~14 GB | コード生成特化 |
+| mixtral:8x7b | 47B相当 | ~26 GB | MoE・高性能 |
+| llama3.1:70b | 70B | ~40 GB | 最高品質（要大容量RAM） |
+| qwen2.5:72b | 72B | ~41 GB | 多言語最高品質（要大容量RAM） |
+| deepseek-r1:32b | 32B | ~20 GB | 推論特化・大規模 |
 
 モデル一覧は https://ollama.com/library で確認できます。
